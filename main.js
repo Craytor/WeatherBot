@@ -39,6 +39,7 @@ app.post('/webhook/', function (req, res) {
         var event = req.body.entry[0].messaging[i];
         if (event.message && event.message.text) {
             //          senderid, message
+            // console.log(event.message.text);
             determineText(event.sender.id, event.message.text);
         }
         
@@ -155,7 +156,7 @@ function determineText(senderId, messageText) {
         sendStatus(senderId);
         
     } else if(messageText.toLowerCase() == "locations") {
-        
+        // sendTextMessage(senderId, "Comming soon.");
         listLocations(senderId);
         
     } else if(messageText.toLowerCase() == "generic") {
@@ -192,13 +193,14 @@ function sendStatus(senderId) {
 }
 
 function listLocations(senderId) {
-    var zipCodeArr = [16423,16511,16513,16411];
+    var zipCodeArr = ["16423","16511","16513","16411","16417"];
     
     myZipString = "";
     
     for(i=0; i<zipCodeArr.length; i++) {
-        if(i=0) {
+        if(i === 0) {
             myZipString += zipCodeArr[i];
+            continue;
         }
         myZipString += ", " + zipCodeArr[i];
     }
